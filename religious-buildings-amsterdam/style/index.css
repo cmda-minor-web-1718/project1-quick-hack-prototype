@@ -1,0 +1,212 @@
+:root {
+  --church-color: lightseagreen;
+  --synagogue-color: gray;
+  --monastery-color: plum;
+  --temple-color: khaki;
+  --mosque-color: lightblue;
+  --shrine-color: salmon;
+  --primary-color: #0091EA;
+  --primary-border: 3px solid;
+  --def-transition: all .3s ease-in;
+  --def-transition-fast: all .1s ease-in;
+  --def-transition-normal: all .5s ease-in; }
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0; }
+
+html,
+body {
+  position: relative;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'open sans', sans-serif; }
+
+body {
+  position: relative; }
+
+/*==========================
+=== General styling
+===========================*/
+img {
+  max-height: 20rem; }
+
+/*==========================
+=== Map styling
+===========================*/
+#map {
+  position: relative;
+  height: 100%;
+  width: 100%; }
+  #map::after {
+    content: "";
+    transition: var(--def-transition); }
+  #map.show::after {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.3); }
+  #map.show aside {
+    transform: translateX(0); }
+
+aside {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 1rem;
+  height: 90%;
+  width: 90%;
+  z-index: 100;
+  background: #fff;
+  padding: 1rem;
+  margin: auto 0;
+  transition: var(--def-transition);
+  transform: translateX(110%);
+  overflow-y: scroll; }
+  aside > button {
+    display: block;
+    position: relative;
+    margin-left: auto;
+    margin-bottom: .5rem;
+    border: none;
+    color: var(--primary-color);
+    text-transform: uppercase; }
+    aside > button::after {
+      content: "";
+      position: absolute;
+      transition: var(--def-transition-fast); }
+    aside > button:hover::after {
+      right: 0;
+      bottom: -2px;
+      width: 100%;
+      height: 3px;
+      border-bottom: var(--primary-border) var(--primary-color); }
+  aside > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; }
+    aside > div img {
+      width: 100%; }
+      aside > div img:not(:first-of-type) {
+        margin-top: .3rem; }
+
+@media all and (min-width: 30rem) {
+  aside {
+    width: 20rem; } }
+
+/*==========================
+=== Filter styles
+===========================*/
+.show ~ #filter-container {
+  transform: translateY(-300%); }
+
+#filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  height: min-content;
+  top: 2rem;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: 0 auto;
+  padding-top: 1rem;
+  background: #fff;
+  transition: var(--def-transition-normal);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  z-index: 100; }
+  #filter-container header {
+    text-align: center; }
+
+label {
+  border-bottom-width: 0px;
+  transition: var(--def-transition-fast);
+  padding: .5rem 1.5rem;
+  font-size: .9em;
+  flex: 1;
+  text-align: center; }
+
+#filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; }
+
+#slider {
+  display: flex;
+  margin: .5rem 0;
+  flex-wrap: wrap;
+  flex-direction: column; }
+
+.filter-checkbox {
+  position: absolute;
+  left: -9999999px; }
+  .filter-checkbox:checked + .label-church {
+    border-bottom: 3px solid var(--church-color); }
+  .filter-checkbox:checked + .label-synagogue {
+    border-bottom: 3px solid var(--synagogue-color); }
+  .filter-checkbox:checked + .label-monastery {
+    border-bottom: 3px solid var(--monastery-color); }
+  .filter-checkbox:checked + .label-temple {
+    border-bottom: 3px solid var(--temple-color); }
+  .filter-checkbox:checked + .label-mosque {
+    border-bottom: 3px solid var(--mosque-color); }
+  .filter-checkbox:checked + .label-shrine {
+    border-bottom: 3px solid var(--shrine-color); }
+  .filter-checkbox:checked:hover + .label-church,
+  .filter-checkbox:checked:hover + .label-synagogue,
+  .filter-checkbox:checked:hover + .label-monastery,
+  .filter-checkbox:checked:hover + .label-temple,
+  .filter-checkbox:checked:hover + .label-mosque,
+  .filter-checkbox:checked:hover + .label-shrine {
+    border-bottom-width: 1rem; }
+
+/*==========================
+=== Marker styles
+===========================*/
+.marker {
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50% 50% 0;
+  margin: -20px 0 0 -20px; }
+  .marker:after {
+    content: '';
+    width: 14px;
+    height: 14px;
+    margin: 8px 0 0 8px;
+    background: #fff;
+    position: absolute;
+    border-radius: 50%; }
+
+.marker-church {
+  background-color: var(--church-color); }
+
+.marker-synagogue {
+  background-color: var(--synagogue-color); }
+
+.marker-monastery {
+  background-color: var(--monastery-color); }
+
+.marker-temple {
+  background-color: var(--temple-color); }
+
+.marker-mosque {
+  background-color: var(--mosque-color); }
+
+.marker-shrine {
+  background-color: var(--shrine-color); }
+
+.hide,
+.hide-filter,
+.hide-year {
+  display: none; }

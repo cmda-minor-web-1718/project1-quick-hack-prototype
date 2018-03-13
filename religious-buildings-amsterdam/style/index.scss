@@ -1,0 +1,294 @@
+:root {
+    --church-color: lightseagreen;
+    --synagogue-color: gray;
+    --monastery-color: plum; //  --temple-color: lightGoldenRodYellow;
+    //  --monastery-color: rebeccaPurple; //  --temple-color: lightGoldenRodYellow;
+    //  --temple-color: sandyBrown;
+    --temple-color: khaki;
+    --mosque-color: lightblue;
+    --shrine-color: salmon;
+    --primary-color: #0091EA;
+    --primary-border: 3px solid;
+    --def-transition: all .3s ease-in;
+    --def-transition-fast: all .1s ease-in;
+    --def-transition-normal: all .5s ease-in;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    position: relative;
+    height: 100%;
+    margin: 0;
+    padding: 0; //  overflow: hidden;
+    font-family: 'open sans', sans-serif;
+}
+
+body {
+    position: relative; //  display: grid; //  grid-template-areas: "filter" "map" "map";
+    //  grid-template-columns: 1fr;
+    //  grid-template-rows: auto 1fr;
+}
+
+
+/*==========================
+=== General styling
+===========================*/
+
+img {
+    max-height: 20rem;
+}
+
+
+/*==========================
+=== Map styling
+===========================*/
+
+#map {
+    position: relative; //  grid-row: 2 / span 2;
+    height: 100%;
+    width: 100%;
+    &::after {
+        content: "";
+        transition: var(--def-transition);
+    }
+    &.show {
+        &::after {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1;
+            background: rgba(0, 0, 0, .3);
+        }
+        aside {
+            transform: translateX(0);
+        }
+    }
+}
+
+aside {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 1rem;
+    height: 90%; //  width: 100%;
+    width: 90%;
+    z-index: 100;
+    background: #fff;
+    padding: 1rem;
+    margin: auto 0;
+    transition: var(--def-transition);
+    transform: translateX(110%);
+    overflow-y: scroll;
+    &>button {
+        display: block;
+        position: relative;
+        margin-left: auto;
+        margin-bottom: .5rem;
+        border: none;
+        color: var(--primary-color);
+        text-transform: uppercase;
+        &::after {
+            content: "";
+            position: absolute;
+            transition: var(--def-transition-fast);
+        }
+        &:hover {
+            &::after {
+                right: 0;
+                bottom: -2px;
+                width: 100%;
+                height: 3px;
+                border-bottom: var(--primary-border) var(--primary-color);
+            }
+        }
+    }
+    &>div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        img {
+            width: 100%;
+            &:not(:first-of-type) {
+                margin-top: .3rem;
+            }
+        }
+    }
+}
+
+@media all and (min-width: 30rem) {
+    aside {
+        width: 20rem;
+    }
+}
+
+
+/*==========================
+=== Filter styles
+===========================*/
+
+.show {
+    &~#filter-container {
+        transform: translateY(-300%);
+    }
+}
+
+#filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute; //  grid-row: 1/1; //  height: min-content;
+    flex-direction: column;
+    align-items: center;
+    width: 90%; //  margin-left: auto;
+    //  margin-right: auto;
+    height: min-content;
+    top: 2rem;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: 0 auto;
+    padding-top: 1rem;
+    background: #fff;
+    transition: var(--def-transition-normal);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); //  overflow-y: visible;
+    z-index: 100;
+    header {
+        text-align: center;
+    }
+}
+
+label {
+    border-bottom-width: 0px;
+    transition: var(--def-transition-fast);
+    padding: .5rem 1.5rem;
+    font-size: .9em;
+    flex: 1;
+    text-align: center;
+}
+
+#filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#slider {
+    display: flex;
+    margin: .5rem 0;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.filter-checkbox {
+    position: absolute;
+    left: -9999999px;
+    &:checked {
+        &+label {
+            // color: var(--(attr(name))-color);
+            // color: attr(data-color); // Only returns a string 😞
+        }
+        &+.label-church {
+            border-bottom: 3px solid var(--church-color);
+        }
+        &+.label-synagogue {
+            border-bottom: 3px solid var(--synagogue-color);
+        }
+        &+.label-monastery {
+            border-bottom: 3px solid var(--monastery-color);
+        }
+        &+.label-temple {
+            border-bottom: 3px solid var(--temple-color);
+        }
+        &+.label-mosque {
+            border-bottom: 3px solid var(--mosque-color);
+        }
+        &+.label-shrine {
+            border-bottom: 3px solid var(--shrine-color);
+        }
+        &:hover {
+            &+.label-church,
+            &+.label-synagogue,
+            &+.label-monastery,
+            &+.label-temple,
+            &+.label-mosque,
+            &+.label-shrine,
+            {
+                border-bottom-width: 1rem;
+            }
+        }
+    }
+    &:hover,
+    &:focus {}
+}
+
+@media all and (max-width: 30rem) {
+    #filter-container {
+        header {}
+    }
+}
+
+
+/*==========================
+=== Marker styles
+===========================*/
+
+.marker {
+    width: 30px;
+    height: 30px;
+    border-radius: 50% 50% 50% 0;
+    margin: -20px 0 0 -20px;
+    &:after {
+        content: '';
+        width: 14px;
+        height: 14px;
+        margin: 8px 0 0 8px;
+        background: #fff;
+        position: absolute;
+        border-radius: 50%;
+    }
+}
+
+.marker-church {
+    background-color: var(--church-color); //  svg {
+    //      stroke: red;
+    //      fill: red;
+    //  }
+}
+
+.marker-synagogue {
+    background-color: var(--synagogue-color); //  background: url("../static/images/svg/001-synagogue.svg");
+}
+
+.marker-monastery {
+    background-color: var(--monastery-color); //  background: url("../static/images/svg/004-monastery.svg");
+}
+
+.marker-temple {
+    background-color: var(--temple-color); //  background: url("../static/images/svg/006-temple.svg");
+}
+
+.marker-mosque {
+    background-color: var(--mosque-color); //  background: url("../static/images/svg/003-mosque.svg");
+}
+
+.marker-shrine {
+    background-color: var(--shrine-color); //  background: url("../static/images/svg/002-shrine.svg");
+}
+
+.show {}
+
+.hide,
+.hide-filter,
+.hide-year {
+    display: none;
+}
